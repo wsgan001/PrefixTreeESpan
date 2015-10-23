@@ -10,7 +10,7 @@ public class TreeMining {
 
 	public static void main(String[] args) {
 		
-		List<TreeStruct> list = ReadFile.readTreeData("test3.data");
+		List<TreeStruct> list = ReadFile.readTreeData("data/test3.data");
 		
 		System.out.println("Read date finished!");
 		
