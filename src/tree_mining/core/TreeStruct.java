@@ -18,12 +18,20 @@ public class TreeStruct {
 	private ArrayList<TreeNode> treeList = new ArrayList<>();
 	//store the sequence that have been matched currently
 	private String matchedSequence = null;
-	
+	/**
+	 * 
+	 * @param treeSequence
+	 */
 	public TreeStruct(String treeSequence){
 		this.treeSequence = treeSequence;
 		String str[] = treeSequence.split(" ");
 		int preMinusCount = 0;
 		int nodeCount = 0;
+		//parse the input tree sequence such as
+		// 1 2 -1 3 -1 -1 represents:
+		//     1
+		//    / \
+		//   2   3
 		Stack<Integer> stack = new Stack<>();
 		stack.push(nodeCount);
 		for(String s : str){
@@ -38,15 +46,15 @@ public class TreeStruct {
 			stack.push(nodeCount);
 		}
 	}
-	
+	//get the total nodes' number
 	public int getTreeLength(){
 		return this.treeList.size();
 	}
-	
+	//get the node of index 
 	public TreeNode getTreeNode(int index){
 		return this.treeList.get(index);
 	}
-	
+	//get all tree nodes
 	public List<TreeNode> getTreeNodeList(){
 		return this.treeList;
 	}

@@ -3,45 +3,68 @@ package tree_mining.core;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import tree_mining.util.Pair;
-
-import java.util.Set;
-
+/**
+ * This is the sub-tree structure which store a state of a expanded node
+ * some essential info are stored 
+ * @author Jiajun
+ *
+ */
 public class SubTreeStruct {
-
+	//store the current sub tree state: all the trees are stored who contain the current sub-tree
+	//the list in the Pair store the sequence of the grow position
 	private List<Pair<TreeStruct, List<Integer>>> parentTreeList;
-
+	//store the sub-tree's string value
 	private String subTreeSequence;
-	
+	/**
+	 * 
+	 * @param parentTreeList
+	 */
 	public SubTreeStruct(List<Pair<TreeStruct, List<Integer>>> parentTreeList) {
 		this("", parentTreeList);
 	}
-	
+	/**
+	 * 
+	 * @param treeSequence
+	 * @param parentTreeList
+	 */
 	public SubTreeStruct(String treeSequence, List<Pair<TreeStruct, List<Integer>>> parentTreeList){
 		this.subTreeSequence = treeSequence;
 		this.parentTreeList = parentTreeList;
 	}
-	
+	/**
+	 * get the frequency of current sub-tree
+	 * @return
+	 */
 	public int getSupport(){
 		return this.parentTreeList.size();
 	}
-	
+	/**
+	 * get current sub-tree's string value
+	 * @return
+	 */
 	public String getSubTreeSequence(){
 		return this.subTreeSequence;
 	}
-	
+	/**
+	 * get the parent trees that contain the current sub-tree
+	 * @return
+	 */
 	public List<Pair<TreeStruct, List<Integer>>> getParentTreeMsg(){
 		return this.parentTreeList;
 	}
-	
-	public Set<GrowthElement> getGrowthElement(){
-		Set<GrowthElement> growthElementSet = new HashSet<GrowthElement>();
+	/**
+	 * get current sub-tree's available grow elements
+	 * @return
+	 */
+	public List<GrowthElement> getGrowthElement(){
+		List<GrowthElement> growthElementList = new ArrayList<>();
 		Map<Integer, String> nodeMap = new HashMap<>();
+		//initial state, the subTreeSequence is empty
 		if(this.subTreeSequence.equals("")){
 			for(Pair<TreeStruct, List<Integer>> p : parentTreeList){
 				TreeStruct tree = p.getFirst();
@@ -55,6 +78,7 @@ public class SubTreeStruct {
 				List<Integer> matchPointList = p.getSecond();
 				int len = matchPointList.size();
 				TreeNode node = null;
+				//find the available element whose grow position must in the candidates
 				for(int i = matchPointList.get(len-1); i < tree.getTreeLength(); i++){
 					node = tree.getTreeNode(i);
 					if(node.getParentPos() < matchPointList.get(0) || node.getParentPos() > matchPointList.get(len-1))
@@ -77,36 +101,63 @@ public class SubTreeStruct {
 				}
 			}
 		}
-		
+		//change the storage form of the grow elements.
 		for(Entry<Integer, String> entry : nodeMap.entrySet()){
 			String str[] = entry.getValue().split(",");
 			for(String s : str){
-				growthElementSet.add(new GrowthElement(entry.getKey(), Integer.parseInt(s)));
+				growthElementList.add(new GrowthElement(entry.getKey(), Integer.parseInt(s)));
 			}
 		}
 		
-		return growthElementSet;
+		return growthElementList;
 	}
-	
+	/**
+	 * expand the current sub-tree using the given grow element 
+	 * @param ge grow element
+	 * @return
+	 */
 	public SubTreeStruct expandSubtree(GrowthElement ge){
 		List<Pair<TreeStruct, List<Integer>>> list = new ArrayList<>();
 		StringBuffer newSequence = new StringBuffer();
-//		newSequence.append(this.subTreeSequence +ge.getNodeValue()+",");
 		int pos = ge.getGrowPosition();
+		//initial state
 		if(pos == -1){
 			newSequence.append(this.subTreeSequence +ge.getNodeValue()+",-1,");
-		}else{
+		}else{ //insert the grow element into the sub-tree string value
 			String str[] = this.subTreeSequence.split(",");
-			for(int i = str.length; i >= 0 && pos > 0; i++){
-				if(str[i].equals("-1")){
-					pos--;
-				}else{
-					pos++;
+			
+			int index = 0;
+			//find the parent's position
+			for(; index < str.length; index++){
+				if(pos == 0)
+					break;
+				if(str[index].equals("-1")){
+					continue;
 				}
+				pos --;
 			}
+			
+			int minus = 1;
+			//match the '-1' counting
+			for(index++; index < str.length; index++){
+				if(str[index].equals("-1")){
+					minus --;
+				}else{
+					minus++;
+				}
+				if(minus == 0)
+					break;
+			}
+			for(int i = 0; i < str.length; i++){
+				if(i == index){
+					newSequence.append(ge.getNodeValue()+",-1,");
+				}
+				newSequence.append(str[i]+",");
+			}
+			
 		}
 		
-		
+		//loop try to expand the tree from the current tree set 
 		for(Pair<TreeStruct, List<Integer>> treePair : parentTreeList){
 			TreeStruct tree = treePair.getFirst();
 			List<Integer> matchPoint = treePair.getSecond();
@@ -142,19 +193,6 @@ public class SubTreeStruct {
 		}
 		
 		return new SubTreeStruct(new String(newSequence), list);
-	}
-	
-	class Compare implements Comparator{
-
-		@Override
-		public int compare(Object arg0, Object arg1) {
-			if(arg0 instanceof Integer && arg1 instanceof Integer){
-				Integer a = (Integer) arg0;
-				Integer b = (Integer) arg1;
-				return a.intValue() - b.intValue();
-			}
-			return 0;
-		}
 	}
 
 }
