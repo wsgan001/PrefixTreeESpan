@@ -46,6 +46,7 @@ public class TreeMining {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("run finish!");
 		
 	}
 }

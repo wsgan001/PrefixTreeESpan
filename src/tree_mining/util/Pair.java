@@ -1,5 +1,11 @@
 package tree_mining.util;
-
+/**
+ * 
+ * @author Jiajun
+ *
+ * @param <A>
+ * @param <B>
+ */
 public class Pair<A, B> {
 	
 	private A first;
