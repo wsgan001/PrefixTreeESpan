@@ -46,15 +46,25 @@ public class TreeStruct {
 			stack.push(nodeCount);
 		}
 	}
-	//get the total nodes' number
+	/**
+	 * get the total nodes' number
+	 * @return
+	 */
 	public int getTreeLength(){
 		return this.treeList.size();
 	}
-	//get the node of index 
+	/**
+	 * get the node of index 
+	 * @param index
+	 * @return
+	 */
 	public TreeNode getTreeNode(int index){
 		return this.treeList.get(index);
 	}
-	//get all tree nodes
+	/**
+	 * get all tree nodes
+	 * @return
+	 */
 	public List<TreeNode> getTreeNodeList(){
 		return this.treeList;
 	}

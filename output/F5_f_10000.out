@@ -1,0 +1,19 @@
+1,35,-1,-1,
+frequency = 33153
+1,31,-1,35,-1,-1,
+frequency = 10810
+1,31,57,-1,-1,35,-1,-1,
+frequency = 10681
+19,-1,
+frequency = 15251
+29,-1,
+frequency = 10702
+31,57,64,-1,-1,-1,
+frequency = 12516
+35,-1,
+frequency = 37488
+57,64,-1,-1,
+frequency = 14913
+64,-1,
+frequency = 19004
+Total time use : 939ms

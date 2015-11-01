@@ -1,0 +1,9 @@
+20,-1,
+frequency = 5
+40,-1,
+frequency = 4
+10,20,-1,40,-1,-1,
+frequency = 3
+10,40,-1,-1,
+frequency = 3
+Total time use : 4ms

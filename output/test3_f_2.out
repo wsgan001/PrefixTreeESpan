@@ -1,0 +1,19 @@
+80,-1,
+frequency = 2
+50,-1,
+frequency = 2
+20,30,50,-1,-1,-1,
+frequency = 2
+20,30,40,-1,50,-1,-1,-1,
+frequency = 2
+70,-1,
+frequency = 2
+40,-1,
+frequency = 2
+60,-1,
+frequency = 2
+30,50,-1,-1,
+frequency = 2
+30,40,-1,50,-1,-1,
+frequency = 2
+Total time use : 4ms

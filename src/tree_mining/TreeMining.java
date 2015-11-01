@@ -17,9 +17,13 @@ public class TreeMining {
 
 	public static void main(String[] args) {
 		//file name that contains the data set
-		String fileName = "CSlog";
+		//F5 100,000
+		//D10 100,000
+		//CSlog 60,000
+		//T1M 1,000,000
+		String fileName = "test2";
 		//the minimal support value
-		int support = 5000;
+		int support = 2;
 		
 		FileWriter fw = null;
 		try {
